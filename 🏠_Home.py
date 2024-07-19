@@ -1,4 +1,9 @@
+# pylint: disable=W2402
+# pylint: disable=C0103
+# pylint: disable=C0114
+# pylint: disable=C0301
 import streamlit as st
+
 
 st.set_page_config(
     page_title="Portfolio Page",
