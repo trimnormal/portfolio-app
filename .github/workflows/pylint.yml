@@ -21,4 +21,5 @@ jobs:
         pipenv sync
     - name: Analysing the code with pylint
       run: |
-         pipenv run pylint 🏠_Home.py pages/1_🔋_Amazon_FSX_for_NetApp_ONTAP.py pages/2_📚_Certifications.py pages/3_📊_DataFrame_Demo.py
+         pipenv run pylint $(git ls-files '*.py')
+         
