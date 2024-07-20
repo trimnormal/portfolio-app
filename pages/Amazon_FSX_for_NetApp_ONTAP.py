@@ -1,9 +1,14 @@
+"""
+    Doc string
+"""
+
 import streamlit as st
 import requests
-import json
 
 params = {"q": "fsx-ontap", "limit": 1, "provder": "aws", "namespace": "trimnormal"}
-r = requests.get("https://registry.terraform.io/v1/modules/search", params=params)
+r = requests.get(
+    "https://registry.terraform.io/v1/modules/search", params=params, timeout=10
+)
 download_count = r.json()["modules"][0]["downloads"]
 version = r.json()["modules"][0]["tag"]
 description = r.json()["modules"][0]["description"]
@@ -14,7 +19,8 @@ name = "fsx-ontap"
 provider = "aws"
 
 metric_r = requests.get(
-    f"https://registry.terraform.io/v2/modules/{namespace}/{name}/{provider}/downloads/summary"
+    f"https://registry.terraform.io/v2/modules/{namespace}/{name}/{provider}/downloads/summary",
+    timeout=10,
 )
 download_data = metric_r.json()["data"]["attributes"]
 week = download_data["week"]
@@ -50,17 +56,28 @@ st.markdown(
 
 **What is AWS FSx for NetApp ONTAP?**
 
-AWS FSx for NetApp ONTAP is a fully managed service that provides advanced data management capabilities, combining the power of NetApp’s ONTAP file system with the scalability, agility, and security of AWS. This service allows you to launch, run, and scale fully managed NetApp ONTAP file systems in the cloud with ease, providing seamless integration with your existing data and applications.
+AWS FSx for NetApp ONTAP is a fully managed service that provides advanced data management 
+capabilities, combining the power of NetApp’s ONTAP file system with the scalability, agility, and 
+security of AWS. This service allows you to launch, run, and scale fully managed NetApp ONTAP file 
+systems in the cloud with ease, providing seamless integration 
+with your existing data and applications.
 
 Key features include:
 
-- **High Performance:** Delivers high throughput and low latency for both file and block storage workloads.
-- **Data Management:** Offers NetApp ONTAP's rich data management features, such as data deduplication, compression, tiering, cloning, and snapshots.
-- **Scalability:** Scales up to petabytes of data, supporting high-performance and I/O-intensive workloads.
-- **Security and Compliance:** Provides robust security with encryption at rest and in transit, and integrates with AWS Identity and Access Management (IAM) for fine-grained access control.
-- **Cost Efficiency:** Helps optimize costs with storage efficiency features and the ability to choose between SSD and HDD storage options.
+- **High Performance:** Delivers high throughput and low latency 
+for both file and block storage workloads.
+- **Data Management:** Offers NetApp ONTAP's rich data management features, such as data 
+deduplication, compression, tiering, cloning, and snapshots.
+- **Scalability:** Scales up to petabytes of data, supporting high-performance 
+and I/O-intensive workloads.
+- **Security and Compliance:** Provides robust security with encryption at rest and in transit, 
+and integrates with AWS Identity and Access Management (IAM) for fine-grained access control.
+- **Cost Efficiency:** Helps optimize costs with storage efficiency features and the ability to 
+choose between SSD and HDD storage options.
 
-AWS FSx for NetApp ONTAP is ideal for applications that require shared file storage with enterprise-grade features, such as file services, databases, big data analytics, and development and test environments.
+AWS FSx for NetApp ONTAP is ideal for applications that require shared file storage with 
+enterprise-grade features, such as file services, databases, big data analytics, 
+and development and test environments.
 
 ---
 
