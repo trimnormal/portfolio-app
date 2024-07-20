@@ -19,10 +19,9 @@ jobs:
         python -m pip install --upgrade pip
         pip install pipenv
         pipenv sync
-        pipenv shell
     - name: Analysing the code with pylint
       run: |
-        pylint 🏠_Home.py
-        pylint pages/1_🔋_Amazon_FSX_for_NetApp_ONTAP.py
-        pylint pages/2_📚_Certifications.py
-        pylint pages/3_📊_DataFrame_Demo.py
+        pipenv run pylint 🏠_Home.py
+        pipenv run pylint pages/1_🔋_Amazon_FSX_for_NetApp_ONTAP.py
+        pipenv run pylint pages/2_📚_Certifications.py
+        pipenv run pylint pages/3_📊_DataFrame_Demo.py
