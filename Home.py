@@ -50,10 +50,10 @@ My portfolio is a testament to my dedication to cloud engineering and developmen
 )
 
 if st.button("🔋 Amazon FSX for NetApp ONTAP"):
-    st.switch_page("pages/1_🔋_Amazon_FSX_for_NetApp_ONTAP.py")
+    st.switch_page("pages/Amazon_FSX_for_NetApp_ONTAP.py")
 
 if st.button("📚 Certifications"):
-    st.switch_page("pages/2_📚_Certifications.py")
+    st.switch_page("pages/Certifications.py")
 
 if st.button("📊 DataFrame_Demo"):
-    st.switch_page("pages/3_📊_DataFrame_Demo.py")
+    st.switch_page("pages/DataFrame_Demo.py")
