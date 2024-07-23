@@ -4,9 +4,9 @@ provider "aws" {
 
 terraform {
   backend "s3" {
-    bucket         = "zc-portfolio-app-tf-state"
-    key            = "portfolio-app.tfstate"
-    region         = "us-east-1"
+    bucket = "zc-portfolio-app-tf-state"
+    key    = "portfolio-app.tfstate"
+    region = "us-east-1"
   }
 }
 

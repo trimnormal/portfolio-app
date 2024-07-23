@@ -14,10 +14,10 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v2
+        uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: 1.5.4
 
@@ -34,4 +34,26 @@ jobs:
 
       - name: Terraform Plan
         working-directory: ./terraform
-        run: terraform plan
+        run: terraform plan -no-color > plan.txt
+        
+      - name: Add Plan Output to Comment
+        id: create_comment
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const fs = require('fs');
+            const planOutput = fs.readFileSync('./terraform/plan.txt', 'utf8');
+            const markdownPlan = `
+            ## Terraform Plan
+            \`\`\`terraform
+            ${planOutput}
+            \`\`\`
+            `;
+            const { data: comment } = await github.rest.repos.createCommitComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              commit_sha: context.sha,
+              body: markdownPlan,
+            });
+            core.setOutput('comment-url', comment.html_url);
