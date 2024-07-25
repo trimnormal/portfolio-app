@@ -7,7 +7,7 @@
 # - Show the URL on the terminal
 # - Open the browser
 # Default: "localhost"
-serverAddress = "localhost"
+#serverAddress = "localhost"
 
 # Whether to send usage statistics to Streamlit.
 # Default: true

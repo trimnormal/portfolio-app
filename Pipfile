@@ -11,6 +11,7 @@ altair = "*"
 requests = "*"
 black = "*"
 pylint = "*"
+watchdog = "*"
 
 [dev-packages]
 

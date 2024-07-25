@@ -8,6 +8,15 @@ terraform {
     key    = "portfolio-app.tfstate"
     region = "us-east-1"
   }
+
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 5.59"
+    }
+  }
+
+  required_version = "~> 1.9.2"
 }
 
 resource "aws_s3_bucket" "tf-state" {
