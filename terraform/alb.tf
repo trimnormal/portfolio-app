@@ -3,7 +3,6 @@ resource "aws_lb" "this" {
   load_balancer_type = "application"
   security_groups    = [aws_security_group.this.id]
   subnets            = data.aws_subnets.this.ids
-
 }
 
 data "aws_vpcs" "this" {
