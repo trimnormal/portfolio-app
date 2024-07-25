@@ -7,7 +7,7 @@ import streamlit as st
 
 def main():
     """
-    Doc string
+    Doc string 
     """
     st.set_page_config(
         page_title="Portfolio Page",
