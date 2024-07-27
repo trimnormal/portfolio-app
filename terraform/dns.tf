@@ -18,3 +18,27 @@ import {
   id = "Z0869368318HH6SAHKT02"
 }
 
+import {
+  to = aws_route53_record.A
+  id = "Z0869368318HH6SAHKT02_zacharycorbishley.com_A"
+}
+
+import {
+  to = aws_route53_record.NS
+  id = "Z0869368318HH6SAHKT02_zacharycorbishley.com_NS"
+}
+
+import {
+  to = aws_route53_record.SOA
+  id = "Z0869368318HH6SAHKT02_zacharycorbishley.com_SOA"
+}
+
+import {
+  to = aws_route53_record.TXT
+  id = "Z0869368318HH6SAHKT02_zacharycorbishley.com_TXT"
+}
+
+import {
+  to = aws_route53_record.wwwA
+  id = "Z0869368318HH6SAHKT02_www.zacharycorbishley.com_A"
+}

@@ -23,7 +23,12 @@ resource "aws_ecs_task_definition" "this" {
           protocol      = "tcp"
         }
       ]
-
+      environment = [
+        {
+          name  = "AWS_DEFAULT_REGION"
+          value = "us-east-1"
+        }
+      ]
 
     }
   ])
@@ -46,5 +51,5 @@ resource "aws_ecs_service" "this" {
     container_port   = 8501
   }
 
-  depends_on = [aws_lb_listener.HTTP] #not sure if needed
+  depends_on = [aws_lb_listener.HTTP, aws_lb_listener.HTTPS] #not sure if needed
 }

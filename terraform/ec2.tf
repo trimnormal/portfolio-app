@@ -8,6 +8,8 @@ resource "aws_launch_template" "this" {
   instance_market_options {
     market_type = "spot"
   }
+  user_data            = "#!/bin/bash\necho ECS_CLUSTER=zc-portfolio-app >> /etc/ecs/ecs.config"
+  security_group_names = [aws_security_group.this.name]
 }
 
 resource "aws_autoscaling_group" "this" {

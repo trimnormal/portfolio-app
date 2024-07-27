@@ -46,15 +46,16 @@ resource "aws_lb_listener" "HTTPS" {
   port              = 443
   protocol          = "HTTPS"
   ssl_policy        = "ELBSecurityPolicy-TLS13-1-2-2021-06"
-  certificate_arn   = aws_acm_certificate.this.arn
+  certificate_arn   = data.aws_acm_certificate.this.arn
+  #aws_acm_certificate.this.arn
   default_action {
     type             = "forward"
     target_group_arn = aws_lb_target_group.this.arn
   }
 }
 
-# data "aws_acm_certificate" "this" {
-#   domain      = "zacharycorbishley.com"
-#   types       = ["AMAZON_ISSUED"]
-#   most_recent = true
-# }
+data "aws_acm_certificate" "this" {
+  domain      = "zacharycorbishley.com"
+  types       = ["AMAZON_ISSUED"]
+  most_recent = true
+}

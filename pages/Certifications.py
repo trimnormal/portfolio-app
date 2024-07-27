@@ -5,7 +5,8 @@
 import streamlit as st
 
 st.markdown("# Certifications")
-st.markdown("""Certifications combined with hands on experience allow me to learn, practice,
+st.markdown(
+    """Certifications combined with hands on experience allow me to learn, practice,
             and test my knowledge. My certifications reflect my focus on agile development
             and cloud infrastructure.
 """

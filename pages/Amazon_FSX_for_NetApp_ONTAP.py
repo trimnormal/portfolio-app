@@ -83,6 +83,14 @@ and development and test environments.
 
 **Why did I develop this module?**
 
-When I began working on this module in August of 2023
+When I began working on this module in August of 2023 there was no publicly available terraform
+module to deploy FSx ONTAP. The FSx family of AWS services is often overlooked in favor of  
+AWS EFS to support filesystem workloads. Recognizing a gap in the infrastructure as code community,
+ I decided to develop this module to simplify and automate the deployment of FSx for NetApp ONTAP, 
+ enabling other cloud engineers to leverage this powerful service without the manual setup.
+
+This module is designed for scale, it provides the ability to deploy as many storage virtual 
+machines and volumes as needed. There is only a small layer of abstraction, allowing maximum 
+customization, while simplifying the configuration needed for deployment. 
 """
 )
