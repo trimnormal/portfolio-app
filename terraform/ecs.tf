@@ -53,3 +53,15 @@ resource "aws_ecs_service" "this" {
 
   depends_on = [aws_lb_listener.HTTP, aws_lb_listener.HTTPS] #not sure if needed
 }
+
+resource "aws_ecs_capacity_provider" "this" {
+  name = "zc-portfolio-app"
+  auto_scaling_group_provider {
+    auto_scaling_group_arn = aws_autoscaling_group.this.arn
+  }
+}
+
+resource "aws_ecs_cluster_capacity_providers" "this" {
+  cluster_name = aws_ecs_cluster.this.name
+  capacity_providers = [ aws_ecs_capacity_provider.this.name ]
+}

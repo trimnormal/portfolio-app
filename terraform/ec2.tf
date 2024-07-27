@@ -3,12 +3,12 @@ resource "aws_launch_template" "this" {
   iam_instance_profile {
     arn = aws_iam_instance_profile.Ec2.arn
   }
-  image_id      = "ami-047fb6d800866b9fe" #Amazon Linux 2 AMI (HVM) - Kernel 5.10 Arm
+  image_id      = "ami-0da671b04d1bdbb04" #Amazon Linux 2 AMI (HVM) - Kernel 5.10 Arm
   instance_type = "t4g.micro"
   instance_market_options {
     market_type = "spot"
   }
-  user_data            = "#!/bin/bash\necho ECS_CLUSTER=zc-portfolio-app >> /etc/ecs/ecs.config"
+  user_data            = base64encode("#!/bin/bash\necho ECS_CLUSTER=zc-portfolio-app >> /etc/ecs/ecs.config")
   security_group_names = [aws_security_group.this.name]
 }
 
@@ -25,4 +25,9 @@ resource "aws_autoscaling_group" "this" {
   }
   health_check_grace_period = 300
   health_check_type         = "EC2"
+  tag {
+    key                 = "AmazonECSManaged"
+    value               = true
+    propagate_at_launch = true
+  }
 }
