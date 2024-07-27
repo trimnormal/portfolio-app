@@ -7,6 +7,7 @@ COPY pages/ /app/pages
 COPY images/ /app/images
 COPY Pipfile /app/
 
+RUN apt-get update && apt-get install -y curl
 RUN pip install pipenv
 RUN pipenv lock
 RUN pipenv sync
