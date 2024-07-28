@@ -3,6 +3,11 @@ resource "aws_lb" "this" {
   load_balancer_type = "application"
   security_groups    = [aws_security_group.this.id]
   subnets            = data.aws_subnets.this.ids
+  access_logs {
+    bucket = aws_s3_bucket.LogBucket.id
+    prefix = "lb-access-logs"
+    enabled = true
+  }
 }
 
 data "aws_vpcs" "this" {

@@ -24,7 +24,7 @@ resource "aws_s3_bucket" "tf-state" {
 }
 
 resource "aws_s3_bucket_public_access_block" "this" {
-  bucket                  = "zc-portfolio-app-tf-state"
+  bucket                  = aws_s3_bucket.tf-state.id
   block_public_acls       = true
   block_public_policy     = true
   ignore_public_acls      = true
@@ -32,7 +32,7 @@ resource "aws_s3_bucket_public_access_block" "this" {
 }
 
 resource "aws_s3_bucket_server_side_encryption_configuration" "this" {
-  bucket = "zc-portfolio-app-tf-state"
+  bucket = aws_s3_bucket.tf-state.id
   rule {
     bucket_key_enabled = false
     apply_server_side_encryption_by_default {
