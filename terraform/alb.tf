@@ -28,7 +28,7 @@ resource "aws_lb_target_group" "this" {
   protocol             = "HTTP"
   target_type          = "instance"
   vpc_id               = data.aws_vpcs.this.ids[0]
-  deregistration_delay = 300 #5?
+  deregistration_delay = 5 #5?
 }
 
 resource "aws_lb_listener" "HTTP" {

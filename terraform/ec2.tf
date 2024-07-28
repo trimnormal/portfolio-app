@@ -3,8 +3,8 @@ resource "aws_launch_template" "this" {
   iam_instance_profile {
     arn = aws_iam_instance_profile.Ec2.arn
   }
-  image_id      = "ami-0da671b04d1bdbb04" #Amazon Linux 2 AMI (HVM) - Kernel 5.10 Arm
-  instance_type = "t4g.micro"
+  image_id      = "ami-078b975e9370a6516"
+  instance_type = "t3.micro"
   instance_market_options {
     market_type = "spot"
   }
