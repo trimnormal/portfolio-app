@@ -3,6 +3,38 @@
 """
 
 import streamlit as st
+import boto3
+
+
+def increment_visit_count():
+    """
+    Increment the visit count stored in a DynamoDB table and return the updated count.
+
+    This function connects to a DynamoDB table named 'VisitCounter' in the 'us-east-1' region,
+    increments the value of the 'Count' attribute for the item with the primary key 'visit_count',
+    and returns the updated count as an integer.
+
+    Returns:
+        int: The updated visit count after incrementing by 1.
+
+    Raises:
+        boto3.exceptions.Boto3Error: If there is an error connecting to DynamoDB or
+        updating the item.
+
+    Example:
+        new_count = increment_visit_count()
+        print(f"Updated visit count: {new_count}")
+    """
+    dynamodb = boto3.resource("dynamodb", region_name="us-east-1")
+    table = dynamodb.Table("VisitCounter")
+    response = table.update_item(
+        Key={"CounterID": "visit_count"},
+        UpdateExpression="SET #count = #count + :val",
+        ExpressionAttributeNames={"#count": "Count"},
+        ExpressionAttributeValues={":val": 1},
+        ReturnValues="UPDATED_NEW",
+    )
+    return int(response["Attributes"]["Count"])
 
 
 def main():
@@ -13,14 +45,47 @@ def main():
         page_title="Portfolio Page",
         page_icon="☁️",
     )
+
+    if "counted" not in st.session_state:
+        st.session_state.counted = False
+    if "count" not in st.session_state:
+        st.session_state.count = 0
+
     col1, col2 = st.columns([3, 1])
     with col2:
         st.image("images/Headshot.jpeg")
     with col1:
         st.write("# Hi, I am Zach, a cloud engineer ☁️")
+        
+    col1, col2 = st.columns([2, 4])
+    if st.session_state.counted is False:
+        new_count = increment_visit_count()
+        st.session_state.count = new_count
+        st.session_state.counted = True
+    with col1:
+        st.metric(label="Visitor Count", value=st.session_state.count)
 
+    with col2:
+        st.markdown(
+            """
+            <div style="display: flex; justify-content: space-around; align-items: center;">
+                <a href="https://www.linkedin.com/in/zachary-corbishley/" target="_blank" style="display: flex; align-items: center; margin: 0 20px;">
+                    <img src="https://content.linkedin.com/content/dam/me/business/en-us/amp/brand-site/v2/bg/LI-Bug.svg.original.svg" width="30" height="30" style="vertical-align: middle;">
+                    LinkedIn Profile
+                </a>
+                <a href="https://github.com/trimnormal" target="_blank" style="display: flex; align-items: center; margin: 0 20px;">
+                    <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/brands/github.svg" width="30" height="30" style="vertical-align: middle;">
+                    GitHub Profile
+                </a>
+                <a href="https://github.com/trimnormal/portfolio-app" target="_blank" style="display: flex; align-items: center; margin: 0 20px;">
+                    <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/brands/github.svg" width="30" height="30" style="vertical-align: middle;">
+                    Project Repository
+                </a>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
     st.divider()
-    # st.sidebar.success("Select a post above.")
 
     st.markdown(
         """
@@ -83,8 +148,8 @@ def main():
     if st.button("📚 Certifications"):
         st.switch_page("pages/Certifications.py")
 
-    if st.button("📊 DataFrame_Demo"):
-        st.switch_page("pages/DataFrame_Demo.py")
+    if st.button("📊 Site Architecture"):
+        st.switch_page("pages/Site_Architecture.py")
 
 
 if __name__ == "__main__":

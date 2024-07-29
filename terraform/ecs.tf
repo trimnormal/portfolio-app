@@ -11,29 +11,49 @@ resource "aws_ecs_task_definition" "this" {
   requires_compatibilities = ["EC2"]
   container_definitions = jsonencode([
     {
-      name      = "zc-portfolio-app"
-      image     = "${aws_ecr_repository.this.repository_url}:latest"
-      cpu       = 750
-      memory    = 750
-      essential = true
-      portMappings = [
+      "name" : "zc-portfolio-app",
+      "image" : "${aws_ecr_repository.this.repository_url}:latest",
+      "cpu" : 750,
+      "memory" : 750,
+      "essential" : true,
+      "portMappings" : [
         {
-          containerPort = 8501
-          hostPort      = 8501
-          protocol      = "tcp"
+          "containerPort" : 8501,
+          "hostPort" : 8501,
+          "protocol" : "tcp"
         }
-      ]
-      environment = [
+      ],
+      "environment" : [
         {
-          name  = "AWS_DEFAULT_REGION"
-          value = "us-east-1"
+          "name" : "AWS_DEFAULT_REGION",
+          "value" : "us-east-1"
         }
-      ]
-
+      ],
+      "logConfiguration" : {
+        "logDriver" : "awslogs",
+        "options" : {
+          "awslogs-group" : "${aws_cloudwatch_log_group.ECSLogs.name}",
+          "awslogs-region" : "us-east-1",
+          "awslogs-stream-prefix" : "zc-portfolio-app"
+        }
+      }
+      "healthCheck" : {
+        "retries" : 3,
+        "command" : [
+          "CMD-SHELL",
+          "curl --fail http://localhost:8501/_stcore/health || exit 1"
+        ],
+        "timeout" : 5,
+        "interval" : 60
+      }
     }
   ])
   execution_role_arn = aws_iam_role.TaskExecutionRole.arn
   task_role_arn      = aws_iam_role.TaskRole.arn
+}
+
+resource "aws_cloudwatch_log_group" "ECSLogs" {
+  name = "zc-portfolio-app"
 }
 
 resource "aws_ecs_service" "this" {

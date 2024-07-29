@@ -4,8 +4,8 @@ resource "aws_lb" "this" {
   security_groups    = [aws_security_group.this.id]
   subnets            = data.aws_subnets.this.ids
   access_logs {
-    bucket = aws_s3_bucket.LogBucket.id
-    prefix = "lb-access-logs"
+    bucket  = aws_s3_bucket.LogBucket.id
+    prefix  = "lb-access-logs"
     enabled = true
   }
 }

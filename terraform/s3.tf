@@ -27,3 +27,21 @@ resource "aws_s3_bucket_ownership_controls" "LogBucket" {
     object_ownership = "BucketOwnerEnforced"
   }
 }
+
+resource "aws_s3_bucket_policy" "LogBucket" {
+  bucket = aws_s3_bucket.LogBucket.id
+  policy = data.aws_iam_policy_document.LogBucket.json
+}
+
+data "aws_iam_policy_document" "LogBucket" {
+  statement {
+    effect = "Allow"
+    principals {
+      type        = "AWS"
+      identifiers = ["arn:aws:iam::127311923021:root"]
+    }
+    actions   = ["s3:PutObject"]
+    resources = ["${aws_s3_bucket.LogBucket.arn}/lb-access-logs/*"]
+  }
+}
+

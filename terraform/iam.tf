@@ -5,6 +5,10 @@ resource "aws_iam_role" "TaskRole" {
   assume_role_policy = data.aws_iam_policy_document.EcsAssumeRolePolicy.json
 }
 
+resource "aws_iam_role_policy_attachment" "Dynamo" {
+  role       = aws_iam_role.TaskRole.name
+  policy_arn = aws_iam_policy.Dynamo.arn
+}
 
 #### Task Execution Role ####
 resource "aws_iam_role" "TaskExecutionRole" {
@@ -54,5 +58,20 @@ data "aws_iam_policy_document" "Ec2" {
       type        = "Service"
       identifiers = ["ec2.amazonaws.com"]
     }
+  }
+}
+
+resource "aws_iam_policy" "Dynamo" {
+  name        = "DDBVisitCounterAccess"
+  description = "Policy to allow access to DynamoDB VisitCounter table"
+  policy      = data.aws_iam_policy_document.Dynamo.json
+}
+
+data "aws_iam_policy_document" "Dynamo" {
+  statement {
+    effect = "Allow"
+    actions = ["dynamodb:GetItem",
+    "dynamodb:UpdateItem"]
+    resources = [aws_dynamodb_table.visit_counter.arn]
   }
 }

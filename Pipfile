@@ -12,6 +12,7 @@ requests = "*"
 black = "*"
 pylint = "*"
 watchdog = "*"
+boto3 = "*"
 
 [dev-packages]
 
