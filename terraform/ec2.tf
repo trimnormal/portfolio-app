@@ -9,7 +9,7 @@ resource "aws_launch_template" "this" {
     market_type = "spot"
   }
   user_data            = base64encode("#!/bin/bash\necho ECS_CLUSTER=zc-portfolio-app >> /etc/ecs/ecs.config")
-  security_group_names = [aws_security_group.this.name]
+  security_group_names = [aws_security_group.Ec2.name]
 }
 
 resource "aws_autoscaling_group" "this" {

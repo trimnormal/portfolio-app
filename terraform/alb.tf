@@ -1,7 +1,7 @@
 resource "aws_lb" "this" {
   name               = "zc-portfolio-app"
   load_balancer_type = "application"
-  security_groups    = [aws_security_group.this.id]
+  security_groups    = [aws_security_group.ALB.id]
   subnets            = data.aws_subnets.this.ids
   access_logs {
     bucket  = aws_s3_bucket.LogBucket.id
@@ -41,8 +41,12 @@ resource "aws_lb_listener" "HTTP" {
   port              = 80
   protocol          = "HTTP"
   default_action {
-    type             = "forward"
-    target_group_arn = aws_lb_target_group.this.arn
+    type = "redirect"
+    redirect {
+      port        = 443
+      protocol    = "HTTPS"
+      status_code = "HTTP_301"
+    }
   }
 }
 
