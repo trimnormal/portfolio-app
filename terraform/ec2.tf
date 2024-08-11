@@ -10,6 +10,11 @@ resource "aws_launch_template" "this" {
   }
   user_data            = base64encode("#!/bin/bash\necho ECS_CLUSTER=zc-portfolio-app >> /etc/ecs/ecs.config")
   security_group_names = [aws_security_group.Ec2.name]
+  metadata_options {
+    http_endpoint = "enabled"
+    http_tokens = "required"
+    instance_metadata_tags = "enabled"
+  }
 }
 
 resource "aws_autoscaling_group" "this" {
