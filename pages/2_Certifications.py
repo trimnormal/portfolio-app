@@ -1,5 +1,5 @@
 """
-    Doc string
+    This page shows images of the certifications I have acheived.
 """
 
 import streamlit as st

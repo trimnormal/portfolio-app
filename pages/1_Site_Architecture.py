@@ -1,5 +1,5 @@
 """
-    Doc string 
+    This page shows the architecture of this website.
 """
 
 import streamlit as st

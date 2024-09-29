@@ -13,6 +13,7 @@ black = "*"
 pylint = "*"
 watchdog = "*"
 boto3 = "*"
+openai = "*"
 
 [dev-packages]
 

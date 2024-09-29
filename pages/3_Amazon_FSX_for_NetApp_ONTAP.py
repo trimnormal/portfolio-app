@@ -1,5 +1,5 @@
 """
-    Doc string
+    This page details statistics about the FSX for Netapp Terraform module.
 """
 
 import streamlit as st
