@@ -1,8 +1,8 @@
 resource "aws_lb" "this" {
-  name               = "zc-portfolio-app"
-  load_balancer_type = "application"
-  security_groups    = [aws_security_group.ALB.id]
-  subnets            = data.aws_subnets.this.ids
+  name                       = "zc-portfolio-app"
+  load_balancer_type         = "application"
+  security_groups            = [aws_security_group.ALB.id]
+  subnets                    = data.aws_subnets.this.ids
   drop_invalid_header_fields = true
   access_logs {
     bucket  = aws_s3_bucket.LogBucket.id
@@ -35,17 +35,17 @@ resource "aws_lb_target_group" "this" {
   target_type          = "instance"
   vpc_id               = data.aws_vpcs.this.ids[0]
   deregistration_delay = 5 #5?
-   health_check {
-        enabled             = true
-        healthy_threshold   = 5
-        interval            = 30
-        matcher             = "200"
-        path                = "/"
-        port                = "traffic-port"
-        protocol            = "HTTP"
-        timeout             = 5
-        unhealthy_threshold = 2
-    }
+  health_check {
+    enabled             = true
+    healthy_threshold   = 5
+    interval            = 30
+    matcher             = "200"
+    path                = "/"
+    port                = "traffic-port"
+    protocol            = "HTTP"
+    timeout             = 5
+    unhealthy_threshold = 2
+  }
 }
 
 resource "aws_lb_listener" "HTTP" {

@@ -1,5 +1,4 @@
 #### Task Role ####
-# Grant no permissions for now
 resource "aws_iam_role" "TaskRole" {
   name               = "zc-portfolio-app-ecs-task-role"
   assume_role_policy = data.aws_iam_policy_document.EcsAssumeRolePolicy.json
@@ -8,6 +7,11 @@ resource "aws_iam_role" "TaskRole" {
 resource "aws_iam_role_policy_attachment" "Dynamo" {
   role       = aws_iam_role.TaskRole.name
   policy_arn = aws_iam_policy.Dynamo.arn
+}
+
+resource "aws_iam_role_policy_attachment" "SNS" {
+  role       = aws_iam_role.TaskRole.name
+  policy_arn = aws_iam_policy.SNS.arn
 }
 
 #### Task Execution Role ####
@@ -73,5 +77,19 @@ data "aws_iam_policy_document" "Dynamo" {
     actions = ["dynamodb:GetItem",
     "dynamodb:UpdateItem"]
     resources = [aws_dynamodb_table.visit_counter.arn]
+  }
+}
+
+resource "aws_iam_policy" "SNS" {
+  name        = "SNSPublishPortfolioApp"
+  description = "Allows publish to sns topic for portfolio app"
+  policy      = data.aws_iam_policy_document.SNS.json
+}
+
+data "aws_iam_policy_document" "SNS" {
+  statement {
+    effect    = "Allow"
+    actions   = ["sns:Publish"]
+    resources = ["arn:aws:sns:us-east-1:953170553831:zc-portfolio-app-topic"]
   }
 }

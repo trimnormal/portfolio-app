@@ -5,7 +5,7 @@ resource "aws_ecr_repository" "this" {
 resource "aws_ecs_cluster" "this" {
   name = "zc-portfolio-app"
   setting {
-    name = "containerInsights"
+    name  = "containerInsights"
     value = "enabled"
   }
 }
